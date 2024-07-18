@@ -32,12 +32,13 @@ async function processExcelFiles() {
     }
   }
 
-  const outputFilePath = path.join(__dirname, "output.txt");
-  const outputData = Object.entries(valueCounts)
+  const sortedValueCounts = Object.entries(valueCounts)
+    .sort((a, b) => b[1] - a[1])
     .map(([value, count]) => `${value}: ${count}`)
     .join("\n");
 
-  fs.writeFileSync(outputFilePath, outputData);
+  const outputFilePath = path.join(__dirname, "output.txt");
+  fs.writeFileSync(outputFilePath, sortedValueCounts);
 }
 
 processExcelFiles();
